@@ -1,13 +1,14 @@
 #[test_only]
 module fungible_tokens::treasury_lock_tests {
     use std::option;
-    use sui::test_scenario::{Self, Scenario};
-    use sui::balance::{Self, Balance};
-    use sui::transfer;
-    use sui::coin;
-    use sui::object::{Self};
-    use sui::test_utils;
+
     use fungible_tokens::treasury_lock::{Self, TreasuryLock, LockAdminCap, MintCap, create_and_transfer_mint_cap, new_lock, mint_balance};
+    use sui::balance::{Self, Balance};
+    use sui::coin;
+    use sui::object;
+    use sui::test_scenario::{Self, Scenario};
+    use sui::test_utils;
+    use sui::transfer;
 
     const ADMIN: address = @0xABBA;
     const USER: address = @0xB0B;
@@ -23,7 +24,15 @@ module fungible_tokens::treasury_lock_tests {
         test_scenario::next_tx(scenario, ADMIN);
         {
             let treasury_lock_tests = test_utils::create_one_time_witness<TREASURY_LOCK_TESTS>();
-            let (treasury, metadata) = coin::create_currency(treasury_lock_tests, 0, b"", b"", b"", option::none(), test_scenario::ctx(scenario));
+            let (treasury, metadata) = coin::create_currency(
+                treasury_lock_tests,
+                0,
+                b"",
+                b"",
+                b"",
+                option::none(),
+                test_scenario::ctx(scenario)
+            );
             transfer::public_freeze_object(metadata);
             let admin_cap = new_lock(treasury, test_scenario::ctx(scenario));
             transfer::public_transfer(

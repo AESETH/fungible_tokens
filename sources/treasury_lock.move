@@ -1,9 +1,9 @@
 module fungible_tokens::treasury_lock {
-    use sui::object::{Self, UID, ID};
+    use sui::balance::Balance;
     use sui::coin::{Self, TreasuryCap};
-    use sui::balance::{Balance};
-    use sui::tx_context::{Self, TxContext};
+    use sui::object::{Self, UID, ID};
     use sui::transfer;
+    use sui::tx_context::{Self, TxContext};
     use sui::vec_set::{Self, VecSet};
 
     /// This mint capability instance is banned.
@@ -61,7 +61,7 @@ module fungible_tokens::treasury_lock {
     public fun create_mint_cap<T>(
         _cap: &LockAdminCap<T>, max_mint_per_epoch: u64, ctx: &mut TxContext
     ): MintCap<T> {
-        MintCap<T>{
+        MintCap<T> {
             id: object::new(ctx),
             max_mint_per_epoch,
             last_epoch: tx_context::epoch(ctx),

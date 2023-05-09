@@ -1,5 +1,6 @@
 module fungible_tokens::managed {
     use std::option;
+
     use sui::coin::{Self, Coin, TreasuryCap};
     use sui::transfer;
     use sui::tx_context::{Self, TxContext};
@@ -13,7 +14,15 @@ module fungible_tokens::managed {
     /// registered once.
     fun init(witness: MANAGED, ctx: &mut TxContext) {
         // Get a treasury cap for the coin and give it to the transaction sender
-        let (treasury_cap, metadata) = coin::create_currency<MANAGED>(witness, 2, b"MANAGED", b"", b"", option::none(), ctx);
+        let (treasury_cap, metadata) = coin::create_currency<MANAGED>(
+            witness,
+            2,
+            b"MANAGED",
+            b"",
+            b"",
+            option::none(),
+            ctx
+        );
         transfer::public_freeze_object(metadata);
         transfer::public_transfer(treasury_cap, tx_context::sender(ctx))
     }

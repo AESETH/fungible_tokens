@@ -1,7 +1,7 @@
 module fungible_tokens::regulated_coin {
     use sui::balance::{Self, Balance};
-    use sui::tx_context::TxContext;
     use sui::object::{Self, UID};
+    use sui::tx_context::TxContext;
 
     /// The RegulatedCoin struct; holds a common `Balance<T>` which is compatible
     /// with all the other Coins and methods, as well as the `creator` field, which

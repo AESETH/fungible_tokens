@@ -2,8 +2,8 @@
 module fungible_tokens::basket_tests {
     use fungible_tokens::basket::{Self, Reserve};
     use fungible_tokens::managed::MANAGED;
-    use sui::pay;
     use sui::coin;
+    use sui::pay;
     use sui::sui::SUI;
     use sui::test_scenario;
 
